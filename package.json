@@ -1,6 +1,6 @@
 {
-  "name": "oe-input",
-  "version": "0.8.0",
+  "name": "oe-toggle",
+  "version": "0.9.0",
   "directories": {
     "test": "test"
   },
@@ -22,7 +22,7 @@
     "polymer",
     "oe-ui"
   ],
-  "author": "Sasivarnan R <sasivarnan36@gmail.com>",
+  "author": "Lakshmi Narayanan Gopalan",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^3.19.0",
