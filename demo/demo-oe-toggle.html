@@ -1,0 +1,72 @@
+<!-- 
+  ©2016-2017 EdgeVerve Systems Limited (a fully owned Infosys subsidiary),
+  Bangalore, India. All Rights Reserved.
+-->
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <title>oe-ui demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../paper-styles/paper-styles.html">
+  <link rel="import" href="custom-styles.html">
+
+  <link rel="import" href="../oe-toggle.html">
+ </head>
+
+<body unresolved>
+  <div class="vertical-section-container centered">
+    <h3>Unchecked toggle</h3>
+    <demo-snippet>
+      <template>
+        <oe-toggle label="Unchecked toggle"></oe-toggle>
+      </template>
+    </demo-snippet>
+
+    <h3>Checked toggle</h3>
+    <demo-snippet>
+      <template>
+        <oe-toggle label="Checked toggle" value></oe-toggle>
+      </template>
+    </demo-snippet>
+
+    <h3>Disabled toggle</h3>
+    <demo-snippet>
+      <template>
+       <oe-toggle label="Disabled toggle" disabled></oe-toggle>
+      </template>
+    </demo-snippet>
+
+    <h3>Unchecked toggle icon</h3>
+    <demo-snippet>
+      <template>
+        <oe-toggle label="Unchecked toggle icon" icon="favorite"></oe-toggle>
+      </template>
+    </demo-snippet>
+
+    <h3>Checked toggle icon</h3>
+    <demo-snippet>
+      <template>
+        <oe-toggle label="Checked toggle icon" icon="favorite" value></oe-toggle>
+      </template>
+    </demo-snippet>
+
+    <h3>Disabled toggle icon</h3>
+    <demo-snippet>
+      <template>
+        <oe-toggle id="one" label="Disabled toggle icon" disabled icon="favorite"></oe-toggle>
+      </template>
+    </demo-snippet>
+
+  </div>
+</body>
+
+</html>
