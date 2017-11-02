@@ -6,6 +6,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../oe-field-behavior/oe-field-behavior.html">
 
 <!--
 ### oe-toggle
@@ -74,7 +75,7 @@ CSS Variable | Description | Default
          /**
          * Specifies the label to be displayed beside the toggle.
          */
-        "label" : {
+        label : {
           type: String
         },
          /**
@@ -82,31 +83,35 @@ CSS Variable | Description | Default
          * the icon's icon set. If given a valid value,
          * toggle icon will be displayed instead of sliding toggle.
          */
-        "icon" : {
+        icon : {
           type: String,
-          value : ""
+          value : ''
         },
          /**
          * Property reflecting checked state.
          */
-        "value" : {
+        value : {
           type: Boolean,
+          notify: true,
           value: false
         }
       },
+      behaviors:[
+        OEUtils.FieldBehavior
+      ],
       /**
       * Function to set icon's css class.
       */
       _getFillStyle: function(checked) {
         if (this.icon && !this.disabled) {
-          return(checked ? "checked" : "unchecked");
+          return(checked ? 'checked' : 'unchecked');
         }
       },
        /**
       * Function to determine display of toggle icon.
       */
       _isIcon: function(icon) {
-        return(icon != "" ? true : false);
+        return(icon != '' ? true : false);
       }
     });
   });
