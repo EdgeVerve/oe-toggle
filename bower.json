@@ -16,6 +16,6 @@
     "iron-test-helpers": "^1.4.1"
   },
   "resolutions": {
-    "paper-icon-button": "^2.0.0"
+    "webcomponentsjs": "^v1.0.2"
   }
 }
