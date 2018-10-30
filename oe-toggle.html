@@ -55,11 +55,11 @@ CSS Variable | Description | Default
               <oe-i18n-msg msgid="=[[label]]">[[label]]</oe-i18n-msg>
           </span>
           <template is="dom-if" if="[[!_isIcon(icon)]]">
-            <paper-toggle-button disabled$="[[disabled]]" checked={{value}}>
+            <paper-toggle-button disabled$="[[disabled]]" aria-label$="[[label]]" checked={{value}}>
             </paper-toggle-button>
           </template>
           <template is="dom-if" if="[[_isIcon(icon)]]">
-            <paper-icon-button icon="[[icon]]" disabled$="[[disabled]]" toggles active={{value}}
+            <paper-icon-button icon="[[icon]]" disabled$="[[disabled]]" aria-label$="[[label]]" toggles active={{value}}
               class$="[[_getFillStyle(value)]]">
             </paper-icon-button>
           </template>
