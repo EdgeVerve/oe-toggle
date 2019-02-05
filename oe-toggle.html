@@ -7,6 +7,8 @@
 <link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../oe-field-behavior/oe-field-behavior.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 
 <!--
 ### oe-toggle
@@ -32,7 +34,7 @@ CSS Variable | Description | Default
   <template>
     <style>
       :host([disabled]) paper-icon-button {
-       color: var(--disabled-text-color) !important;
+        color: var(--disabled-text-color) !important;
       }
 
       .toggleSpan {
@@ -41,29 +43,28 @@ CSS Variable | Description | Default
       }
 
       paper-icon-button.checked {
-        color: var(--oe-toggle-icon-checked-color,#3F51B5);
+        color: var(--oe-toggle-icon-checked-color, #3F51B5);
       }
 
       paper-icon-button.unchecked {
-         color: var(--oe-toggle-icon-unchecked-color,#000000);
+        color: var(--oe-toggle-icon-unchecked-color, #000000);
       }
-
     </style>
     <div class="layout horizontal">
-        <div class="layout horizontal">
-          <span class="toggleSpan" hidden$=[[!label]]>
-              <oe-i18n-msg msgid="=[[label]]">[[label]]</oe-i18n-msg>
-          </span>
-          <template is="dom-if" if="[[!_isIcon(icon)]]">
-            <paper-toggle-button disabled$="[[disabled]]" aria-label$="[[label]]" checked={{value}}>
-            </paper-toggle-button>
-          </template>
-          <template is="dom-if" if="[[_isIcon(icon)]]">
-            <paper-icon-button icon="[[icon]]" disabled$="[[disabled]]" aria-label$="[[label]]" toggles active={{value}}
-              class$="[[_getFillStyle(value)]]">
-            </paper-icon-button>
-          </template>
-        </div>
+      <div class="layout horizontal">
+        <span class="toggleSpan" hidden$=[[!label]]>
+          <oe-i18n-msg msgid="=[[label]]">[[label]]</oe-i18n-msg>
+        </span>
+        <template is="dom-if" if="[[!_isIcon(icon)]]">
+          <paper-toggle-button disabled$="[[disabled]]" aria-label$="[[label]]" aria-disabled="[[disabled]]" checked={{value}} aria-checked="{{value}}">
+          </paper-toggle-button>
+        </template>
+        <template is="dom-if" if="[[_isIcon(icon)]]">
+          <paper-icon-button icon="[[icon]]" disabled$="[[disabled]]" aria-label$="[[label]]" aria-disabled="[[disabled]]" aria-checked="{{value}}"
+            toggles active={{value}} class$="[[_getFillStyle(value)]]">
+          </paper-icon-button>
+        </template>
+      </div>
     </div>
   </template>
 </dom-module>
@@ -72,46 +73,53 @@ CSS Variable | Description | Default
     Polymer({
       is: 'oe-toggle',
       properties: {
-         /**
-         * Specifies the label to be displayed beside the toggle.
-         */
-        label : {
+        /**
+        * Specifies the label to be displayed beside the toggle.
+        */
+        label: {
           type: String
         },
-         /**
-         * Specifies the icon name or index in the set of icons available in
-         * the icon's icon set. If given a valid value,
-         * toggle icon will be displayed instead of sliding toggle.
-         */
-        icon : {
+        /**
+        * Specifies the icon name or index in the set of icons available in
+        * the icon's icon set. If given a valid value,
+        * toggle icon will be displayed instead of sliding toggle.
+        */
+        icon: {
           type: String,
-          value : ''
+          value: ''
         },
-         /**
-         * Property reflecting checked state.
-         */
-        value : {
+        /**
+        * Property setting the disabled state. 
+        */
+        disabled: {
+          type: Boolean,
+          value: false
+        },
+        /**
+        * Property reflecting checked state.
+        */
+        value: {
           type: Boolean,
           notify: true,
           value: false
         }
       },
-      behaviors:[
+      behaviors: [
         OEUtils.FieldBehavior
       ],
       /**
       * Function to set icon's css class.
       */
-      _getFillStyle: function(checked) {
+      _getFillStyle: function (checked) {
         if (this.icon && !this.disabled) {
-          return(checked ? 'checked' : 'unchecked');
+          return (checked ? 'checked' : 'unchecked');
         }
       },
-       /**
-      * Function to determine display of toggle icon.
-      */
-      _isIcon: function(icon) {
-        return(icon != '' ? true : false);
+      /**
+     * Function to determine display of toggle icon.
+     */
+      _isIcon: function (icon) {
+        return (icon != '' ? true : false);
       }
     });
   });
