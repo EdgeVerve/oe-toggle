@@ -13,8 +13,8 @@
     "@polymer/paper-icon-button": "3.0.2",
     "@polymer/paper-toggle-button": "3.0.1",
     "@polymer/polymer": "3.1.0",
-    "oe-i18n-msg": "git+http://10.73.97.24/polymer-3/oe-i18n-msg.git#master",
-    "oe-mixins": "git+http://10.73.97.24/polymer-3/oe-mixins.git#master"
+    "oe-i18n-msg": "git+http://evgit/oecloud.io/oe-i18n-msg.git#master",
+    "oe-mixins": "git+http://evgit/oecloud.io/oe-mixins.git#master"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "3.0.2",
