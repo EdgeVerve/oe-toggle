@@ -1,23 +1,23 @@
-<!-- 
-  ©2016-2017 EdgeVerve Systems Limited (a fully owned Infosys subsidiary),
-  Bangalore, India. All Rights Reserved.
--->
 <!doctype html>
-<html>
+<html lang="en">
+
 <head>
-  <title>oe-toggle tests</title>
-
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
-  <script src="../../iron-test-helpers/test-helpers.js"></script>
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+  <title>oe-toggle test</title>
 
-  <link rel="import" href="../oe-toggle.html">
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+  
+
+  <script type="module" src="../oe-toggle.js"></script>
 </head>
+
 <body>
   <test-fixture id="checked">
     <template>
@@ -37,7 +37,13 @@
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+    import { DomApi } from "@polymer/polymer/lib/legacy/polymer.dom";
+    import '@polymer/iron-test-helpers/mock-interactions';
+    function getDom(node) {
+      return new DomApi(node);
+    }
+
     suite('basic', function () {
 
       test('validating checked status', function () {
@@ -50,23 +56,24 @@
         assert.isFalse(el.value, 'toggle is unchecked');
       });
 
-      test('verifying paper-icon-button not rendered', function () {
+      test('verifying paper-icon-button not rendered', function (done) {
         var el = fixture('checked');
-        flush(function() {
-          assert.isNotNull(el.querySelector("paper-toggle-button"),"paper-toggle-button is rendered");
-          assert.isNull(el.querySelector("paper-icon-button"),"paper-icon-button is not rendered");
+        flush(function () {
+          assert.isNotNull(getDom(el.root).querySelector("paper-toggle-button"), "paper-toggle-button is rendered");
+          assert.isNull(getDom(el.root).querySelector("paper-icon-button"), "paper-icon-button is not rendered");
+          done();
         });
       });
 
       test('verifying checked flag on checked toggle', function (done) {
         var el = fixture('checked');
         assert.isTrue(el.value);
-        el.addEventListener('click', function() {
+        el.addEventListener('click', function () {
           assert.isFalse(el.value, 'click on checked toggle is changing checked value');
           done();
         });
-        flush(function() {
-          var paperToggle = el.querySelector("paper-toggle-button");
+        flush(function () {
+          var paperToggle = getDom(el.root).querySelector("paper-toggle-button");
           MockInteractions.tap(paperToggle);
         });
       });
@@ -74,12 +81,12 @@
       test('verifying checked flag on unchecked toggle', function (done) {
         var el = fixture('unchecked');
         assert.isFalse(el.value);
-        el.addEventListener('click', function() {
+        el.addEventListener('click', function () {
           assert.isTrue(el.value, 'click on unchecked toggle is changing checked value');
           done();
         });
-        flush(function() {
-          var paperToggle = el.querySelector("paper-toggle-button");
+        flush(function () {
+          var paperToggle = getDom(el.root).querySelector("paper-toggle-button");
           MockInteractions.tap(paperToggle);
         });
       });
@@ -87,33 +94,34 @@
       test('verifying checked flag not disturbed for a disabled field', function (done) {
         var el = fixture('unchecked');
         el.disabled = true;
-        flush(function() {
-          var paperToggle = el.querySelector("paper-toggle-button");
+        flush(function () {
+          var paperToggle = getDom(el.root).querySelector("paper-toggle-button");
           MockInteractions.tap(paperToggle);
-          setTimeout(function() {
+          setTimeout(function () {
             assert.isFalse(el.value, 'click on disabled toggle is not changing checked value');
             done();
-          },1);
+          }, 1);
         });
       });
 
-      test('verifying paper-toggle-button not rendered', function () {
+      test('verifying paper-toggle-button not rendered', function (done) {
         var el = fixture('icon');
-        flush(function() {
-          assert.isNull(el.querySelector("paper-toggle-button"),"paper-toggle-button is not rendered");
-          assert.isNotNull(el.querySelector("paper-icon-button"),"paper-icon-button is rendered");
+        flush(function () {
+          assert.isNull(getDom(el.root).querySelector("paper-toggle-button"), "paper-toggle-button is not rendered");
+          assert.isNotNull(getDom(el.root).querySelector("paper-icon-button"), "paper-icon-button is rendered");
+          done();
         });
       });
 
       test('verifying checked flag on checked toggle icon', function (done) {
         var el = fixture('icon');
         el.value = true;
-        el.addEventListener('click', function() {
+        el.addEventListener('click', function () {
           assert.isFalse(el.value, 'click on disabled toggle is not changing checked value');
           done();
         });
-        flush(function() {
-          var paperToggle = el.querySelector("paper-icon-button");
+        flush(function () {
+          var paperToggle = getDom(el.root).querySelector("paper-icon-button");
           MockInteractions.tap(paperToggle);
         });
       });
@@ -121,12 +129,12 @@
       test('verifying checked flag on unchecked toggle icon', function (done) {
         var el = fixture('icon');
         el.checked = false;
-        el.addEventListener('click', function() {
+        el.addEventListener('click', function () {
           assert.isTrue(el.value, 'click on disabled toggle is not changing checked value');
           done();
         });
-        flush(function() {
-          var paperToggle = el.querySelector("paper-icon-button");
+        flush(function () {
+          var paperToggle = getDom(el.root).querySelector("paper-icon-button");
           MockInteractions.tap(paperToggle);
         });
       });
@@ -134,16 +142,17 @@
       test('verifying checked flag not disturbed for a disabled icon', function () {
         var el = fixture('icon');
         el.disabled = true;
-        flush(function() {
-          var paperIcon = el.querySelector("paper-icon-button");
+        flush(function () {
+          var paperIcon = getDom(el.root).querySelector("paper-icon-button");
           MockInteractions.tap(paperIcon);
-          setTimeout(function() {
+          setTimeout(function () {
             assert.isFalse(el.value, 'click on disabled icon is not changing checked value');
-          },1);
+          }, 1);
         });
       });
 
     });
   </script>
 </body>
+
 </html>
