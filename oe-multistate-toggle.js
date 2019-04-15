@@ -12,6 +12,8 @@ import {
   OEFieldMixin
 } from "oe-mixins/oe-field-mixin.js";
 import "@polymer/paper-button/paper-button.js";
+import "@polymer/iron-flex-layout/iron-flex-layout-classes.js";
+
 import "oe-i18n-msg/oe-i18n-msg";
 
 /**
@@ -43,10 +45,10 @@ class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
   static get template() {
     return html `
     <style include="iron-flex">
-    #label,
-    #info {
-      padding: 2px 0;
+    :host {
+      display: block;
     }
+
     #label {
       font-size: 12px;
       color: var(--secondary-text-color);
@@ -56,13 +58,23 @@ class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
     #button {
       font-size: 15px;
       margin: 0px;
+      padding: 0.32em 0.57em;
       @apply --oe-multistate-toggle-button;
     }
 
+    .container {
+      margin-top: 12px;
+    }
+
+    #label.label-focused {
+      color: var(--oe-multistate-toggle-label-focused-color, var(--primary-color));
+      @apply --oe-multistate-toggle-label-focused;
+    }
+
     </style>
-      <div class="layout vertical">
-        <span id="label" hidden$=[[!label]]>
-            <oe-i18n-msg msgid="=[[label]]">[[label]]</oe-i18n-msg>
+      <div class="container layout vertical">
+        <span id="label" class$=[[_getLabelClass(focused)]] hidden$=[[!label]]>
+            dsdasd <oe-i18n-msg msgid="=[[label]]">[[label]]</oe-i18n-msg>
         </span>
         <paper-button id="button" style=[[_getStyle(value)]] on-tap="_nextState" disabled=[[disabled]] raised=[[raised]]>[[_getDisplay(value)]]</paper-button>
     </div>
@@ -104,11 +116,44 @@ class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
       raised: {
         type: Boolean,
         value: false
+      },
+      _boundOnFocus: {
+        type: Function,
+        value: function () {
+          return this._onFocus.bind(this);
+        }
+      },
+
+      _boundOnBlur: {
+        type: Function,
+        value: function () {
+          return this._onBlur.bind(this);
+        }
       }
     };
   }
 
-  static get _defaultStyles(){
+  ready() {
+    super.ready();
+    this.addEventListener('focus', this._boundOnFocus, true);
+    this.addEventListener('blur', this._boundOnBlur, true);
+  }
+  _onFocus() {
+    console.log('Got Focus');
+    this.set('focused', true);
+  }
+
+  _onBlur() {
+    console.log('Lost Focus');
+    this.set('focused', false);
+  }
+
+  _getLabelClass(focused) {
+    let val = focused ? 'label-focused' : '';
+    console.log(val)
+    return val;
+  }
+  static get _defaultStyles() {
     return [
       'background: var(--primary-color); color: var(--text-primary-color);',
       'background: var(--accent-color); color: var(--text-primary-color);',
@@ -122,7 +167,7 @@ class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
     let self = this;
     if (this.listdata) {
       let index = this.listdata.findIndex(item => item.value === self.value);
-      if(index>=0){
+      if (index >= 0) {
         style = this.listdata[index].style || OeMultiStateToggle._defaultStyles[index]
       }
     }
@@ -130,12 +175,12 @@ class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
 
   }
 
-  _getDisplay(value){
+  _getDisplay(value) {
     let display = '';
     let self = this;
     if (this.listdata) {
       let index = this.listdata.findIndex(item => item.value === self.value);
-      display = index>=0?this.listdata[index].label:'';
+      display = index >= 0 ? this.listdata[index].label : '';
     }
     return display;
   }
