@@ -11,10 +11,16 @@ import {
 import {
   OEFieldMixin
 } from "oe-mixins/oe-field-mixin.js";
-import "@polymer/paper-button/paper-button.js";
-import "@polymer/iron-flex-layout/iron-flex-layout-classes.js";
 
+import "@polymer/paper-ripple/paper-ripple.js"
+
+import "@polymer/paper-tabs/paper-tabs.js"
+import "@polymer/paper-tabs/paper-tab.js"
+
+
+import "@polymer/iron-flex-layout/iron-flex-layout-classes.js";
 import "oe-i18n-msg/oe-i18n-msg";
+import { Polymer } from '@polymer/polymer/polymer-legacy';
 
 /**
  * `oe-multistate-toggle`
@@ -36,10 +42,10 @@ import "oe-i18n-msg/oe-i18n-msg";
  * @appliesMixin OEFieldMixin
  * @demo /demo/index.html
  */
-class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
+class OeSliderToggle extends OEFieldMixin(PolymerElement) {
 
   static get is() {
-    return 'oe-multistate-toggle';
+    return 'oe-slider-toggle';
   }
 
   static get template() {
@@ -49,35 +55,94 @@ class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
       display: block;
     }
 
-    #label {
-      font-size: 12px;
-      color: var(--secondary-text-color);
-      @apply --oe-multistate-toggle-label;
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 90px;
+      height: 34px;
     }
-
-    #button {
-      font-size: 15px;
-      margin: 0px;
-      padding: 0.32em 0.57em;
-      @apply --oe-multistate-toggle-button;
+    
+    .switch input {display:none;}
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: blue;
+      -webkit-transition: .4s;
+      transition: .4s;
     }
-
-    .container {
-      margin-top: 12px;
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
     }
-
-    #label.label-focused {
-      color: var(--oe-multistate-toggle-label-focused-color, var(--primary-color));
-      @apply --oe-multistate-toggle-label-focused;
+    
+    input:checked + .slider {
+      background-color: red;
     }
+    
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked + .slider:before {
+      -webkit-transform: translateX(55px);
+      -ms-transform: translateX(55px);
+      transform: translateX(55px);
+    }
+    
+    /*------ ADDED CSS ---------*/
+    .on
+    {
+      display: none;
+    }
+    
+    .on, .off
+    {
+      color: white;
+      position: absolute;
+      transform: translate(-50%,-50%);
+      top: 50%;
+      left: 50%;
+    }
+    
+    input:checked+ .slider .on
+    {display: block;}
+    
+    input:checked + .slider .off
+    {display: none;}
+    
+    /*--------- END --------*/
+    
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+    
+    .slider.round:before {
+      border-radius: 50%;}
 
     </style>
-      <div class="container layout vertical">
-        <span id="label" class$=[[_getLabelClass(focused)]] hidden$=[[!label]]>
-            <oe-i18n-msg msgid="=[[label]]">[[label]]</oe-i18n-msg>
-        </span>
-        <paper-button id="button" style=[[_getStyle(value)]] on-tap="_nextState" disabled=[[disabled]] raised=[[raised]]>[[_getDisplay(value)]]</paper-button>
+
+    <label class="switch"><input type="checkbox" id="togBtn">
+    <div class="slider round">
+      <span class="off">[[listdata.0.label]]</span>
+      <span class="on">[[listdata.1.label]]</span>
     </div>
+    </label>
+
+
     `;
   }
 
@@ -168,7 +233,7 @@ class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
     if (this.listdata) {
       let index = this.listdata.findIndex(item => item.value === self.value);
       if (index >= 0) {
-        style = this.listdata[index].style || OeMultiStateToggle._defaultStyles[index]
+        style = this.listdata[index].style || OeSliderToggle._defaultStyles[index]
       }
     }
     return style;
@@ -198,4 +263,4 @@ class OeMultiStateToggle extends OEFieldMixin(PolymerElement) {
 
 }
 
-window.customElements.define(OeMultiStateToggle.is, OeMultiStateToggle);
+window.customElements.define(OeSliderToggle.is, OeSliderToggle);
