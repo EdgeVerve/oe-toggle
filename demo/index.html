@@ -15,6 +15,7 @@
   </script>
 
   <script type="module" src="../oe-toggle.js"></script>
+  <script type="module" src="../oe-multistate-toggle.js"></script>
 
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -68,6 +69,15 @@
         <oe-toggle label="Disabled toggle icon" disabled icon="favorite"></oe-toggle>
       </template>
     </demo-snippet>
+
+    <h3>Multi State Toggle</h3>
+    <demo-snippet>
+      <template>
+        <oe-multistate-toggle label="Cashflow Type" value="CP" listdata='[{"label":"Floating", "value":"FL", "color":"red"}, {"label":"Fixed", "value":"FX", "color":"blue"}, {"label":"Cap", "value":"CP", "color":"green"}]'></oe-multistate-toggle>
+        <oe-multistate-toggle label="Cashflow Type (Disabled)" disabled value="CP" listdata='[{"label":"Floating", "value":"FL", "color":"red"}, {"label":"Fixed", "value":"FX", "color":"blue"}, {"label":"Cap", "value":"CP", "color":"green"}]'></oe-multistate-toggle>
+      </template>
+    </demo-snippet>
+
   </div>
 </body>
 
