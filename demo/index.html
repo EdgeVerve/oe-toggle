@@ -16,6 +16,7 @@
 
   <script type="module" src="../oe-toggle.js"></script>
   <script type="module" src="../oe-multistate-toggle.js"></script>
+  <script type="module" src="../oe-slider-toggle.js"></script>
 
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -77,6 +78,14 @@
         <oe-multistate-toggle label="Cashflow Type (Disabled)" disabled value="CP" listdata='[{"label":"Floating", "value":"FL", "color":"red"}, {"label":"Fixed", "value":"FX", "color":"blue"}, {"label":"Cap", "value":"CP", "color":"green"}]'></oe-multistate-toggle>
       </template>
     </demo-snippet>
+
+    <h3>Slider toggle</h3>
+    <demo-snippet>
+      <template>
+        <oe-slider-toggle listdata='[{"label":"Floating", "value":"FL"}, {"label":"Fixed", "value":"FX"}]' label="Slider toggle"></oe-slider-toggle>
+      </template>
+    </demo-snippet>
+
 
   </div>
 </body>
